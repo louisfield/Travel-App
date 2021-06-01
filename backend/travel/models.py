@@ -6,7 +6,7 @@ class Entry(models.Model):
     title = models.CharField(max_length=120)
     country = models.CharField(max_length=80)
     description = models.TextField()
-    time = models.DateTimeField()
+    time = models.DateField()
     complete = models.BooleanField(default=False)
     
     def _str_(self):
