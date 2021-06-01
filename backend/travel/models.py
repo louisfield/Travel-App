@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Travel(models.Model):
+class Entry(models.Model):
     title = models.CharField(max_length=120)
     country = models.CharField(max_length=80)
     description = models.TextField()
