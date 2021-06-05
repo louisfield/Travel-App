@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from '../../components/UI/Modal/Modal'
 import Auxillary from '../../HOC/Auxillary'
-
+import axios from "axios";
 const testItems =[
     {
       id: 1,
@@ -41,7 +41,7 @@ class ListHandler extends Component{
 
     state = {
         viewComplete: false,
-        entryList: testItems,
+        entryList: [],
         modal: false,
         activeItem: {
             title: "test",
@@ -49,6 +49,15 @@ class ListHandler extends Component{
             completed: false,
         }
     }
+    componentDidMount() {
+        this.djangoRefresh();
+      }
+    djangoRefresh = () => {
+        axios
+            .get("/api/entrys")
+            .then((res) => this.setState({ entryList: res.data}))
+            .catch((err) => console.log(err));
+    };
     createEntry = () => {
         const item = { title: "test", description: "testest", completed: false};
         this.setState({activeItem: item, modal: !this.state.modal})
@@ -78,9 +87,18 @@ class ListHandler extends Component{
         const activeItem = { ...this.state.activeItem, [name]: value };
     
         this.setState({ activeItem });
+        console.log(this.state.activeItem)
       };
-
+    submit = () => {
+        axios
+            .post("http://localhost:8000/api/entrys/",this.state.activeItem)
+            .then((res) => this.djangoRefresh())
+        this.setState({ modal: false})
+        console.log("HELLO")
+       
+    }
     renderItems = () => {
+      
         const newItems = this.state.entryList.filter( (item) => item.complete === this.state.viewComplete);
         return newItems.map((item) => (
             <div>
@@ -106,7 +124,9 @@ class ListHandler extends Component{
     backdropCancelHandler = () => {
         this.setState({modal: false});
     }
+
     render() {
+        
         return (
             <Auxillary>
                 { this.state.modal ? <Modal
@@ -114,6 +134,7 @@ class ListHandler extends Component{
                     closeModal={this.backdropCancelHandler}
                     activeItem={this.state.activeItem}
                     handleChange={this.handleChange}
+                    submit={this.submit}
                     >
                        
                     </Modal> : null}

@@ -288,23 +288,23 @@ const myModal = (props) => {
           <Form>
             <FormGroup>
               <Label for='title'>Title</Label>
-              <Input type="text" name="title" id="title" placeholder="Title"/>
+              <Input type="text" name="title" id="title" placeholder="Title" onChange={props.handleChange}/>
             </FormGroup>
             <FormGroup>
               <Label for="country">Country</Label>
-              <Input type="select" name="selectMulti" id="countrySelectMulti" multiple>
+              <Input type="select" name="country" id="countrySelectMulti" multiple onChange={props.handleChange}>
                {transformedCountries}
               </Input>
             </FormGroup>
             <FormGroup>
               <Label for='description'>Description</Label>
-              <Input type="textarea" name="description" id="description" placeholder="Description"/>
+              <Input type="textarea" name="description" id="description" placeholder="Description" onChange={props.handleChange} />
             </FormGroup>
             <FormGroup>
               <Label for='time'>Time</Label>
-              <Input type="date" name="time" id="time" placeholder="Title"/>
+              <Input type="date" name="time" id="time" placeholder="Title" onChange={props.handleChange}/>
             </FormGroup>
-      
+            <Button onClick={props.submit}> Submit</Button>
           </Form>
         </Modal>
         </Auxillary>
