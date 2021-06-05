@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from '../../components/UI/Modal/Modal'
+import classes from './ListHandler.css'
 import Auxillary from '../../HOC/Auxillary'
 import axios from "axios";
 const testItems =[
@@ -46,7 +47,7 @@ class ListHandler extends Component{
         activeItem: {
             title: "test",
             description: "testtest",
-            completed: false,
+            complete: false,
         }
     }
     componentDidMount() {
@@ -71,9 +72,9 @@ class ListHandler extends Component{
     };
     renderList = () => {
         return (
-            <div className="nav nav-tabs">
-                <span className={this.state.viewComplete ? "nav-link" : "nav-link active"} onClick={() => this.displayCompleteEntries(false)}> Incomplete </span>
-                <span className={this.state.viewComplete ? "nav-link active" : "nav-link"} onClick={() => this.displayCompleteEntries(true)}> Complete </span>
+            <div className="nav nav-tabs ">
+                <span className={this.state.viewComplete ? "nav-link" : "nav-link active rounded-pill "} onClick={() => this.displayCompleteEntries(false)}> Incomplete </span>
+                <span className={this.state.viewComplete ? "nav-link active rounded-pill" : "nav-link"} onClick={() => this.displayCompleteEntries(true)}> Complete </span>
             </div>
         )
     }
@@ -94,30 +95,32 @@ class ListHandler extends Component{
             .post("http://localhost:8000/api/entrys/",this.state.activeItem)
             .then((res) => this.djangoRefresh())
         this.setState({ modal: false})
-        console.log("HELLO")
+        
        
     }
     renderItems = () => {
       
         const newItems = this.state.entryList.filter( (item) => item.complete === this.state.viewComplete);
+        console.log(newItems)
         return newItems.map((item) => (
-            <div>
-            <li
+        
+            <tr
                 key={item.id}
-                className="list-group-item d-flex justify-content-between align-items-center">
-                <span
+                >
+              
                     
-                    title={item.description}
-                    >
-                        {item.title} 
-                        
-                    </span>
+                    
+                        <td>{item.title} </td>
+                        <td>{item.country}</td>
+                        <td>{item.time}</td>
+                        <td>{item.complete ? "Complete" : "False"}</td>
+                    
                 <span>
                     <button className="btn btn=-seconday mr-2"> Edit </button>
                     <button className="btn btn-danger"> Delete </button>
                 </span>
-            </li>
-            </div>
+            </tr>
+          
         ))
 
     }
@@ -139,12 +142,26 @@ class ListHandler extends Component{
                        
                     </Modal> : null}
                 
-
-                <button className="btn btn-primary" onClick={this.createEntry}> Add Entry</button>
+                
+                <div className="Table pt-5" >
                 {this.renderList()}
-                <ul className="list-group list-group-flush border-top-0">
+                </div>
+                {this.state.entryList.filter( (item) => item.complete === this.state.viewComplete).length ? 
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Country</th>
+                        <th>Time</th>
+                        <th>Completed?</th>
+                    </tr>
                     {this.renderItems()}
-                </ul>
+                </table>
+                : null}
+                
+                <div className="d-flex justify-content-center">
+                <button className="btn btn-primary bg-success btn-lg btn-block w-25 rounded-pill" onClick={this.createEntry}> Add Entry</button>
+                </div>
+                
             
                 
             

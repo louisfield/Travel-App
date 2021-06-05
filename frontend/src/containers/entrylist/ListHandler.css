@@ -1,0 +1,30 @@
+ th, td, .Table, table  {
+    
+    color: white;
+    margin-right: 20%;
+    border-bottom: black;
+    
+    background-color: #363859;
+    margin-left: 20%;
+    padding: 10px;
+    
+ 
+}
+
+table, th, td {
+   
+    border-spacing: 1em .5em;
+    border-collapse: separate;
+}   
+th, td{
+    padding: 0;
+    padding-right: 20vh;
+   
+}
+
+
+body {
+    height: 100%;
+    margin: 0;
+    background: darkblue;
+}

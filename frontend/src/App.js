@@ -4,7 +4,7 @@ import ListHandler from './containers/entrylist/ListHandler'
 
 function App() {
   return (
-    <div>
+    <div className="App">
 
       <ListHandler/>
         
