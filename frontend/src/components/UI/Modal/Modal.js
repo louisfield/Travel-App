@@ -288,22 +288,27 @@ const myModal = (props) => {
           <Form>
             <FormGroup>
               <Label for='title'>Title</Label>
-              <Input type="text" name="title" id="title" placeholder="Title" onChange={props.handleChange}/>
+              <Input type="text" name="title" id="title" placeholder="Title" value={props.activeItem.title} onChange={props.handleChange}/>
             </FormGroup>
             <FormGroup>
               <Label for="country">Country</Label>
-              <Input type="select" name="country" id="countrySelectMulti" multiple onChange={props.handleChange}>
+              <Input type="select" name="country" id="countrySelectMulti"  value={props.activeItem.country} onChange={props.handleChange}>
                {transformedCountries}
               </Input>
             </FormGroup>
             <FormGroup>
               <Label for='description'>Description</Label>
-              <Input type="textarea" name="description" id="description" placeholder="Description" onChange={props.handleChange} />
+              <Input type="textarea" name="description" id="description" placeholder="Description" value={props.activeItem.description} onChange={props.handleChange} />
             </FormGroup>
             <FormGroup>
               <Label for='time'>Time</Label>
-              <Input type="date" name="time" id="time" placeholder="Title" onChange={props.handleChange}/>
+              <Input type="date" name="time" id="time" placeholder="Title" value={props.activeItem.time} onChange={props.handleChange}/>
             </FormGroup>
+			<FormGroup>
+				<Label for='complete'>Completed?</Label>
+			
+				<Input type='checkbox' name='complete' id='complete' defaultChecked={props.activeItem.complete} onChange={props.handleChange}/>
+			</FormGroup>
             <Button onClick={props.submit}> Submit</Button>
           </Form>
         </Modal>

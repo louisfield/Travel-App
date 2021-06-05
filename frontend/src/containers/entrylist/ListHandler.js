@@ -91,9 +91,19 @@ class ListHandler extends Component{
         console.log(this.state.activeItem)
       };
     submit = () => {
+        console.log(this.state.activeItem)
+        if(this.state.activeItem.id){
+            axios
+            .put("http://localhost:8000/api/entrys/"+this.state.activeItem.id+"/",this.state.activeItem)
+            .then((res) => this.djangoRefresh())
+        } else{
+
+        
         axios
             .post("http://localhost:8000/api/entrys/",this.state.activeItem)
             .then((res) => this.djangoRefresh())
+        }
+        
         this.setState({ modal: false})
         
        
@@ -116,8 +126,8 @@ class ListHandler extends Component{
                         <td>{item.complete ? "Complete" : "False"}</td>
                     
                 <span>
-                    <button className="btn btn=-seconday mr-2"> Edit </button>
-                    <button className="btn btn-danger"> Delete </button>
+                    <button className="btn btn=-seconday mr-2" onClick={() => this.editEntry(item)}> Edit </button>
+                    <button className="btn btn-danger" onClick={() => this.deleteEntry(item)}> Delete </button>
                 </span>
             </tr>
           
@@ -127,7 +137,17 @@ class ListHandler extends Component{
     backdropCancelHandler = () => {
         this.setState({modal: false});
     }
-
+    editEntry = (item) => {
+        this.setState({modal : true, activeItem: item})
+    }
+    deleteEntry = (item) => {
+        axios
+            .delete('http://localhost:8000/api/entrys/'+item.id+'/' , item)
+            .then((res) =>  this.djangoRefresh());
+        const newItems = this.state.entryList.filter( (obj) => obj.id != item.id);
+        
+        this.state.entryList = newItems
+    }
     render() {
         
         return (
