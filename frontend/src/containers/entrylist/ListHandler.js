@@ -3,6 +3,9 @@ import Modal from '../../components/UI/Modal/Modal'
 import classes from './ListHandler.css'
 import Auxillary from '../../HOC/Auxillary'
 import axios from "axios";
+
+const API_KEY = require('../../config/config.json')['api_key ']
+
 const testItems =[
     {
       id: 1,
@@ -129,6 +132,7 @@ class ListHandler extends Component{
                     <button className="btn btn=-seconday mr-2" onClick={() => this.editEntry(item)}> Edit </button>
                     <button className="btn btn-danger" onClick={() => this.deleteEntry(item)}> Delete </button>
                 </span>
+
             </tr>
           
         ))
